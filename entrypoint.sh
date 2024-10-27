@@ -39,7 +39,7 @@ if [ -z "$DOCKER_COMPOSE_FILENAME" ]; then
 fi
 
 if [ -z "$DOCKER_ARGS" ]; then
-  DOCKER_ARGS="-d --remove-orphans --build"
+  DOCKER_ARGS="-d --remove-orphans"
 fi
 
 if [ "$DOCKER_USE_STACK" = "true" ]; then
@@ -96,7 +96,7 @@ if [ -n "$SSH_JUMP_HOST" ]; then
   printf '%s %s\n' "$SSH_JUMP_HOST" "$SSH_JUMP_PUBLIC_KEY" >> /etc/ssh/ssh_known_hosts
 fi
 
-remote_path="\$HOME/$WORKSPACE"
+remote_path="$WORKSPACE"
 remote_cleanup=""
 remote_registry_login=""
 
@@ -106,7 +106,7 @@ if [ -n "$DOCKER_COMPOSE_PREFIX" ]; then
 fi
 
 if $DOCKER_USE_STACK ; then
-  remote_path="\$HOME/$WORKSPACE/$DOCKER_COMPOSE_PREFIX"
+  remote_path="$WORKSPACE/$DOCKER_COMPOSE_PREFIX"
   remote_docker_exec="docker stack deploy -c \"$DOCKER_COMPOSE_FILENAME\" --prune \"$DOCKER_COMPOSE_PREFIX\" $DOCKER_ARGS"
 fi
 
